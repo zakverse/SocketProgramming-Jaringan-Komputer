@@ -1,7 +1,7 @@
 from socket import *
 
 # Menetukan Server
-serverName = 'localhost'
+serverName = '127.0.0.1'  # Localhost
 
 # Menentukan Port Server
 serverPort = 8080
@@ -19,10 +19,17 @@ request = "GET /index.html HTTP/1.1\r\nHost: localhost\r\n\r\n"
 clientSocket.send(request.encode())
 
 # Menerima response dari server
-response = clientSocket.recv(1024).decode()
+response = ""
+
+# Loop untuk menerima data dari server hingga tidak ada lagi data yang dikirim
+while True:
+    data = clientSocket.recv(1024).decode()
+    if not data:
+        break
+    response += data
 
 # Menampilkan response dari server
-print(response.decode())
+print(response)
 
 # Tutup koneksi
 clientSocket.close()

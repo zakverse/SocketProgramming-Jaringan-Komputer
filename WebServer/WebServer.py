@@ -31,15 +31,11 @@ while True:
         outputdata = f.read()
 
         # Kirim response HTTP header ke client
-        connectionSocket.send("HTTP/1.1 200 OK\r\n\r\n".encode())
-
+        connectionSocket.send("HTTP/1.1 200 OK\r\nContent-Type: text/html; charset=utf-8\r\n\r\n".encode())
         # Kirim isi file ke client
-        connectionSocket.send(outputdata.encode())
+        connectionSocket.sendall(outputdata.encode())
 
-        # Kirim isi file ke client
-        for i in range(len(outputdata)):
-            connectionSocket.send(outputdata[i].encode())
-
+        #Tutup koneksi setelah selesai mengirim response
         connectionSocket.close()
 
     except:
